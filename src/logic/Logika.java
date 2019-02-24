@@ -26,7 +26,30 @@ public class Logika {
 
     public static void izracunaj() {
 	pokupiPodatke();
+	izracunajUkupnoUtrosenoKWH();
+	podeliKwhPoZonama();
 	
     }
+
+
+
+	private static void podeliKwhPoZonama() {
+		int razlika;
+		razlika = racun.getBrojDanaObracunskogPerioda()-30;
+		zelenaZona.setMaxKwh(350+350/30*razlika);
+		plavaZona.setMaxKwh(1600+1600/30*razlika);
+		if(racun.getUkupnoUtroseno()<zelenaZona.getMaxKwh()) {
+			zelenaZona.setUtrosenoVisa(racun.getUtrosenoVisa());
+			zelenaZona.setUtrosenoNiza(racun.getUtrosenoNiza());
+			return;
+		}
+		if(racun.getUkupnoUtroseno()<plavaZona.getMaxKwh()) {
+			zelenaZona.setUtrosenoVisa(racun.getUkupnoUtroseno()/racun.getUtrosenoVisa()*zelenaZona.getMaxKwh());
+			zelenaZona.setUtrosenoNiza(racun.getUkupnoUtroseno()/racun.getUtrosenoNiza()*zelenaZona.getMaxKwh());
+			
+			return;
+		}
+		
+	}
     
 }

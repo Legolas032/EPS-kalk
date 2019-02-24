@@ -6,8 +6,17 @@ public class Zona {
     private int utrosenojednotarifno;
     private double cenaPoJediniciVisa;
     private double cenaPoJediniciNiza;
+    private int maxKwh;
 
-    public int getUtrosenojednotarifno() {
+    public int getMaxKwh() {
+		return maxKwh;
+	}
+
+	public void setMaxKwh(int maxKwh) {
+		this.maxKwh = maxKwh;
+	}
+
+	public int getUtrosenojednotarifno() {
 	return utrosenojednotarifno;
     }
 
