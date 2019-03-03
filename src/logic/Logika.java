@@ -1,6 +1,7 @@
 package logic;
 
-import gui.GlavniProzor;
+import javax.swing.table.DefaultTableModel;
+import gui.kontroler.GUIKontroler;
 import logic.racun.Racun;
 import logic.racun.StavkeRacuna;
 import logic.zona.Zona;
@@ -11,45 +12,45 @@ public class Logika {
     public static Zona zelenaZona = new Zona();
     public static Zona plavaZona = new Zona();
     public static Zona crvenaZona = new Zona();
-    public static GlavniProzor gl = new GlavniProzor();
+    public static GUIKontroler kontroler = new GUIKontroler();
 
     public static void izracunajUkupnoUtrosenoKWH() {
 	racun.setUkupnoUtroseno(racun.getUtrosenoNiza() + racun.getUtrosenoVisa());
     }
-
-  
-
-    private static void pokupiPodatke() {
-	racun = gl.pokupiPodatke();
-	izracunajUkupnoUtrosenoKWH();
-    }
-
+    
     public static void izracunaj() {
-	pokupiPodatke();
 	izracunajUkupnoUtrosenoKWH();
 	podeliKwhPoZonama();
-	
     }
 
-
-
 	private static void podeliKwhPoZonama() {
-		int razlika;
-		razlika = racun.getBrojDanaObracunskogPerioda()-30;
-		zelenaZona.setMaxKwh(350+350/30*razlika);
-		plavaZona.setMaxKwh(1600+1600/30*razlika);
-		if(racun.getUkupnoUtroseno()<zelenaZona.getMaxKwh()) {
+		zelenaZona.setMaxKwh(350*racun.getBrojDanaObracunskogPerioda()/30);
+		plavaZona.setMaxKwh(1600*racun.getBrojDanaObracunskogPerioda()/30);
+		if(racun.getUkupnoUtroseno()<=zelenaZona.getMaxKwh()) {
 			zelenaZona.setUtrosenoVisa(racun.getUtrosenoVisa());
 			zelenaZona.setUtrosenoNiza(racun.getUtrosenoNiza());
-			return;
-		}
-		if(racun.getUkupnoUtroseno()<plavaZona.getMaxKwh()) {
-			zelenaZona.setUtrosenoVisa(racun.getUkupnoUtroseno()/racun.getUtrosenoVisa()*zelenaZona.getMaxKwh());
-			zelenaZona.setUtrosenoNiza(racun.getUkupnoUtroseno()/racun.getUtrosenoNiza()*zelenaZona.getMaxKwh());
+			plavaZona.setUtrosenoVisa(0);
+			plavaZona.setUtrosenoNiza(0);
+			crvenaZona.setUtrosenoVisa(0);
+			crvenaZona.setUtrosenoNiza(0);
 			
-			return;
 		}
-		
-	}
-    
+		plavaZona.setRaspon(plavaZona.getMaxKwh()-zelenaZona.getMaxKwh());
+		if(racun.getUkupnoUtroseno()<=plavaZona.getMaxKwh()) {
+			zelenaZona.setUtrosenoVisa(racun.getUtrosenoVisa()/racun.getUkupnoUtroseno()*zelenaZona.getMaxKwh());
+			zelenaZona.setUtrosenoNiza(racun.getUtrosenoNiza()/racun.getUkupnoUtroseno()*zelenaZona.getMaxKwh());
+			plavaZona.setUtrosenoVisa(racun.getUtrosenoVisa()/racun.getUkupnoUtroseno()*(racun.getUkupnoUtroseno()-zelenaZona.getMaxKwh()));
+			plavaZona.setUtrosenoNiza(racun.getUtrosenoNiza()/racun.getUkupnoUtroseno()*(racun.getUkupnoUtroseno()-zelenaZona.getMaxKwh()));
+			crvenaZona.setUtrosenoVisa(0);
+			crvenaZona.setUtrosenoNiza(0);
+			
+		}else {
+		zelenaZona.setUtrosenoVisa(racun.getUtrosenoVisa()/racun.getUkupnoUtroseno()*zelenaZona.getMaxKwh());
+		zelenaZona.setUtrosenoNiza(racun.getUtrosenoNiza()/racun.getUkupnoUtroseno()*zelenaZona.getMaxKwh());
+		plavaZona.setUtrosenoVisa(racun.getUtrosenoVisa()/racun.getUkupnoUtroseno()*plavaZona.getRaspon());
+		plavaZona.setUtrosenoNiza(racun.getUtrosenoNiza()/racun.getUkupnoUtroseno()*plavaZona.getRaspon());
+		crvenaZona.setUtrosenoVisa(racun.getUtrosenoVisa()-zelenaZona.getUtrosenoVisa()-plavaZona.getUtrosenoVisa());
+		crvenaZona.setUtrosenoNiza(racun.getUtrosenoNiza()-zelenaZona.getUtrosenoNiza()-plavaZona.getUtrosenoNiza());
+		}	
+	}  
 }

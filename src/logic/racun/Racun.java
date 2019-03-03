@@ -3,13 +3,25 @@ package logic.racun;
 public class Racun {
 	private int brojDanaObracunskogPerioda;
 	private String vrstaBrojila;
-	private int utrosenoVisa;
-	private int utrosenoNiza;
-	private int utrosenoSrednja;
+	private double utrosenoVisa;
+	private double utrosenoNiza;
+	private double utrosenoSrednja;
 	private String vrstaPrikljucka;
 	private double odobrenaSnaga;
 	private boolean taksaZaRTS;
-	private int ukupnoUtroseno;
+	private double ukupnoUtroseno;
+	public Racun() {
+	}
+
+	public Racun(int brDanaObrPerioda, double utrosenoVisa, double utrosenoNiza, String vrstaPrikljucka,
+			String vrstaBrojila, double odobrenaSnaga) {
+		this.brojDanaObracunskogPerioda = brDanaObrPerioda;
+		this.utrosenoVisa = utrosenoVisa;
+		this.utrosenoNiza = utrosenoNiza;
+		this.vrstaPrikljucka = vrstaPrikljucka;
+		this.vrstaBrojila = vrstaBrojila;
+		this.odobrenaSnaga = odobrenaSnaga;
+	}
 
 	public int getBrojDanaObracunskogPerioda() {
 		return brojDanaObracunskogPerioda;
@@ -27,27 +39,27 @@ public class Racun {
 		this.vrstaBrojila = vrstaBrojila;
 	}
 
-	public int getUtrosenoVisa() {
+	public double getUtrosenoVisa() {
 		return utrosenoVisa;
 	}
 
-	public void setUtrosenoVisa(int utrosenoVisa) {
-		this.utrosenoVisa = utrosenoVisa;
+	public void setUtrosenoVisa(double d) {
+		this.utrosenoVisa = d;
 	}
 
-	public int getUtrosenoNiza() {
+	public double getUtrosenoNiza() {
 		return utrosenoNiza;
 	}
 
-	public void setUtrosenoNiza(int utrosenoNiza) {
+	public void setUtrosenoNiza(double utrosenoNiza) {
 		this.utrosenoNiza = utrosenoNiza;
 	}
 
-	public int getUtrosenoSrednja() {
+	public double getUtrosenoSrednja() {
 		return utrosenoSrednja;
 	}
 
-	public void setUtrosenoSrednja(int utrosenoSrednja) {
+	public void setUtrosenoSrednja(double utrosenoSrednja) {
 		this.utrosenoSrednja = utrosenoSrednja;
 	}
 
@@ -75,12 +87,12 @@ public class Racun {
 		this.taksaZaRTS = taksaZaRTS;
 	}
 
-	public int getUkupnoUtroseno() {
-	    return ukupnoUtroseno;
+	public double getUkupnoUtroseno() {
+		return ukupnoUtroseno;
 	}
 
-	public void setUkupnoUtroseno(int ukupnoUtroseno) {
-	    this.ukupnoUtroseno = ukupnoUtroseno;
+	public void setUkupnoUtroseno(double ukupnoUtroseno) {
+		this.ukupnoUtroseno = ukupnoUtroseno;
 	}
-	
+
 }
